@@ -3,7 +3,7 @@ object fmRegister: TfmRegister
   Top = 114
   BorderStyle = bsToolWindow
   Caption = 'Register'
-  ClientHeight = 164
+  ClientHeight = 213
   ClientWidth = 139
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
@@ -15,17 +15,38 @@ object fmRegister: TfmRegister
   Position = poScreenCenter
   PixelsPerInch = 96
   TextHeight = 13
-  object BitBtn1: TBitBtn
+  object lbUsername: TLabel
+    Left = 8
+    Top = 8
+    Width = 48
+    Height = 13
+    Caption = 'Username'
+  end
+  object lbPassword: TLabel
+    Left = 8
+    Top = 64
+    Width = 46
+    Height = 13
+    Caption = 'Password'
+  end
+  object lbConfirm: TLabel
+    Left = 8
+    Top = 120
+    Width = 84
+    Height = 13
+    Caption = 'Confirm Password'
+  end
+  object bbRegister: TBitBtn
     Left = 32
-    Top = 128
+    Top = 176
     Width = 75
     Height = 25
     TabOrder = 0
     Kind = bkOK
   end
-  object Edit1: TEdit
+  object edConfirm: TEdit
     Left = 8
-    Top = 96
+    Top = 144
     Width = 121
     Height = 21
     PasswordChar = '*'
@@ -33,7 +54,7 @@ object fmRegister: TfmRegister
   end
   object dbedUsername: TDBEdit
     Left = 8
-    Top = 16
+    Top = 32
     Width = 121
     Height = 21
     DataField = 'Name'
@@ -42,7 +63,7 @@ object fmRegister: TfmRegister
   end
   object dbedPassword: TDBEdit
     Left = 8
-    Top = 56
+    Top = 88
     Width = 121
     Height = 21
     DataField = 'Pass'

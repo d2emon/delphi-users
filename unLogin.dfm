@@ -41,11 +41,11 @@ object fmLogin: TfmLogin
     Top = 88
     Width = 75
     Height = 25
-    Caption = 'OK'
+    Action = aLogin
+    Caption = 'Ok'
     Default = True
     ModalResult = 6
     TabOrder = 2
-    OnClick = bbOkClick
     Glyph.Data = {
       DE010000424DDE01000000000000760000002800000024000000120000000100
       0400000000006801000000000000000000001000000000000000000000000000
@@ -70,11 +70,10 @@ object fmLogin: TfmLogin
     Top = 88
     Width = 75
     Height = 25
-    Action = fmMain.aRegister
-    Caption = '&Register'
+    Action = aRegister
+    Caption = 'Register'
     Default = True
     TabOrder = 3
-    OnClick = bbRegisterClick
     Glyph.Data = {
       76010000424D7601000000000000760000002800000020000000100000000100
       04000000000000010000130B0000130B00001000000000000000000000000000
@@ -89,5 +88,17 @@ object fmLogin: TfmLogin
       B3333337FFFF77377FF333B000000333BB33337777777F3377FF3BB3333BB333
       3BB33773333773333773B333333B3333333B7333333733333337}
     NumGlyphs = 2
+  end
+  object alUser: TActionList
+    Left = 8
+    Top = 8
+    object aLogin: TAction
+      Caption = 'Ok'
+      OnExecute = aLoginExecute
+    end
+    object aRegister: TAction
+      Caption = 'Register'
+      OnExecute = aRegisterExecute
+    end
   end
 end

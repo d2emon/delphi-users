@@ -3,7 +3,7 @@ unit unUser;
 interface
 
 uses
-  DB, DBTables, SysUtils, unDBUser, Controls;
+  DB, DBTables, SysUtils, unDBUser, Controls, Dialogs;
 
 type
   EUserException = class(Exception)
@@ -28,6 +28,9 @@ type
 resourcestring
   ErrorBanned = 'You are banned!';
   ErrorLogin  = 'Invalid Username or Password';
+
+  AccessEnabled = 'Access Enabled';
+  AccessDenied  = 'Access Denied';
 
 var
   User: TUser;
@@ -56,7 +59,7 @@ begin
   FPasswordParam.AsString := Password;
 
   FLoginQuery.Close;
-  FLoginQuery.ExecSQL;
+  // FLoginQuery.ExecSQL;
   FLoginQuery.Open;
 
   if(Id>0)then
@@ -93,6 +96,11 @@ begin
   begin
     result := false;
   end;
+
+  if result then
+    MessageDlg(AccessEnabled, mtInformation, [mbOk], 0)
+  else
+    MessageDlg(AccessDenied, mtError, [mbOk], 0);
 end;
 
 function TUser.ShowRegisterForm: Boolean;

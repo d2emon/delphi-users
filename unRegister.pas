@@ -8,10 +8,13 @@ uses
 
 type
   TfmRegister = class(TForm)
-    BitBtn1: TBitBtn;
-    Edit1: TEdit;
+    bbRegister: TBitBtn;
+    edConfirm: TEdit;
     dbedUsername: TDBEdit;
     dbedPassword: TDBEdit;
+    lbUsername: TLabel;
+    lbPassword: TLabel;
+    lbConfirm: TLabel;
   private
     { Private declarations }
   public

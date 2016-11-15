@@ -1,12 +1,12 @@
 object dmUser: TdmUser
   OldCreateOrder = False
+  OnCreate = DataModuleCreate
   Left = 192
   Top = 114
   Height = 150
   Width = 215
   object quLogin: TQuery
-    Active = True
-    DatabaseName = 'gameMe'
+    DatabaseName = 'users'
     SQL.Strings = (
       
         'SELECT Id, Name, Pass, Rights, Email, Rank, Banned, Ip, PostTrad' +
@@ -81,8 +81,7 @@ object dmUser: TdmUser
     Top = 8
   end
   object tbUsers: TTable
-    Active = True
-    DatabaseName = 'gameMe'
+    DatabaseName = 'users'
     TableName = 'users.db'
     Left = 88
     Top = 8

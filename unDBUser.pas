@@ -31,6 +31,7 @@ type
     tbUsersIp: TStringField;
     tbUsersPostTradeScreen: TStringField;
     tbUsersIgnoreNewbie: TBooleanField;
+    procedure DataModuleCreate(Sender: TObject);
   private
     { Private declarations }
   public
@@ -43,5 +44,10 @@ var
 implementation
 
 {$R *.dfm}
+
+procedure TdmUser.DataModuleCreate(Sender: TObject);
+begin
+  tbUsers.Open;
+end;
 
 end.

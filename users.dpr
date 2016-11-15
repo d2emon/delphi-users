@@ -1,9 +1,8 @@
-program empires;
+program users;
 
 uses
   Forms,
   Controls,
-  Dialogs,
   unMain in 'unMain.pas' {fmMain},
   unLogin in 'unLogin.pas' {fmLogin},
   unRegister in 'unRegister.pas' {fmRegister},
@@ -12,18 +11,12 @@ uses
 
 {$R *.res}
 
-resourcestring
-  AccessEnabled = 'Access Enabled';
-  AccessDenied  = 'Access Denied';
-
 begin
   Application.Initialize;
 
   User := TUser.Create;
   if(User.ShowLoginForm)then
   begin
-    MessageDlg(AccessEnabled, mtInformation, [mbOk], 0);
-
     Application.CreateForm(TfmMain, fmMain);
     //Application.CreateForm(TdmUser, dmUser);
     //Application.CreateForm(TfmRegister, fmRegister);
@@ -32,7 +25,6 @@ begin
   end
   else
   begin
-    MessageDlg(AccessDenied, mtError, [mbOk], 0);
     Application.Terminate;
   end;
 end.

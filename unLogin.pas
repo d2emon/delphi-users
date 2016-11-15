@@ -4,7 +4,7 @@ interface
 
 uses
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
-  Dialogs, StdCtrls, Buttons, ExtCtrls, Grids, DBGrids, unUser;
+  Dialogs, StdCtrls, Buttons, ExtCtrls, Grids, DBGrids, unUser, ActnList;
 
 type
   TfmLogin = class(TForm)
@@ -12,8 +12,11 @@ type
     lePassword: TLabeledEdit;
     bbOk: TBitBtn;
     bbRegister: TBitBtn;
-    procedure bbOkClick(Sender: TObject);
-    procedure bbRegisterClick(Sender: TObject);
+    alUser: TActionList;
+    aLogin: TAction;
+    aRegister: TAction;
+    procedure aLoginExecute(Sender: TObject);
+    procedure aRegisterExecute(Sender: TObject);
   private
     { Private declarations }
   public
@@ -30,8 +33,9 @@ uses unMain;
 
 {$R *.dfm}
 
-procedure TfmLogin.bbOkClick(Sender: TObject);
+procedure TfmLogin.aLoginExecute(Sender: TObject);
 begin
+  // User.ShowLoginForm;
 (*
   if User.Login(leUsername.Text, lePassword.Text) then
   begin
@@ -40,7 +44,7 @@ begin
 *)
 end;
 
-procedure TfmLogin.bbRegisterClick(Sender: TObject);
+procedure TfmLogin.aRegisterExecute(Sender: TObject);
 begin
   User.ShowRegisterForm;
 end;
