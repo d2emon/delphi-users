@@ -23,11 +23,13 @@ type
     property DataModule: TdmUser read FDataModule;
     function ShowLoginForm: Boolean;
     function ShowRegisterForm: Boolean;
+    function NewUser(Username, Password: String): Boolean;
   end;
 
 resourcestring
   ErrorBanned = 'You are banned!';
   ErrorLogin  = 'Invalid Username or Password';
+  ErrorExists = 'This user allready exists!';
 
   AccessEnabled = 'Access Enabled';
   AccessDenied  = 'Access Denied';
@@ -81,6 +83,26 @@ begin
   end;
 end;
 
+function TUser.NewUser(Username, Password: String): Boolean;
+begin
+  DataModule.quExists.ParamByName('Username').AsString := Username;
+
+  DataModule.quExists.Close;
+  // DataModule.quExists.ExecSQL;
+  DataModule.quExists.Open;
+
+  if DataModule.quExists.RecordCount = 0 then
+  begin
+    DataModule.tbUsers.Post;
+    result := true;
+  end
+  else
+  begin
+    raise EUserException.Create(ErrorExists);
+    result := false;
+  end;
+end;
+
 function TUser.ShowLoginForm: Boolean;
 var
   LoginForm: TfmLogin;
@@ -113,8 +135,7 @@ begin
 
   if RegisterForm.ShowModal = mrYes then
   begin
-    DataModule.tbUsers.Post;
-    result := true; //Login(LoginForm.leUsername.Text, LoginForm.lePassword.Text);
+    result := NewUser(RegisterForm.dbedUsername.Text, RegisterForm.dbedPassword.Text);
   end
   else
   begin

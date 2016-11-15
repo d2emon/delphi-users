@@ -10,21 +10,19 @@ uses
 
 type
   TfmMain = class(TForm)
-    BitBtn1: TBitBtn;
     cdCustom: TCustomizeDlg;
     alActions: TActionList;
     aRegister: TAction;
     aLogin: TAction;
-    Button1: TButton;
     amActions: TActionManager;
     ilImages: TImageList;
     aCustom: TAction;
-    Action1: TAction;
     cbMenu: TControlBar;
     ambMenu: TActionMainMenuBar;
     atbTools: TActionToolBar;
-    DBGrid1: TDBGrid;
     aSelectGame: TAction;
+    pnLeft: TPanel;
+    DBGrid1: TDBGrid;
     procedure aCustomExecute(Sender: TObject);
     procedure aLoginExecute(Sender: TObject);
     procedure aRegisterExecute(Sender: TObject);

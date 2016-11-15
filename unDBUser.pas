@@ -31,6 +31,7 @@ type
     tbUsersIp: TStringField;
     tbUsersPostTradeScreen: TStringField;
     tbUsersIgnoreNewbie: TBooleanField;
+    quExists: TQuery;
     procedure DataModuleCreate(Sender: TObject);
   private
     { Private declarations }

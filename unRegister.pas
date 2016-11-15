@@ -9,12 +9,13 @@ uses
 type
   TfmRegister = class(TForm)
     bbRegister: TBitBtn;
-    edConfirm: TEdit;
+    edVerify: TEdit;
     dbedUsername: TDBEdit;
     dbedPassword: TDBEdit;
     lbUsername: TLabel;
     lbPassword: TLabel;
     lbConfirm: TLabel;
+    procedure bbRegisterClick(Sender: TObject);
   private
     { Private declarations }
   public
@@ -29,5 +30,17 @@ implementation
 uses unDBUser;
 
 {$R *.dfm}
+
+procedure TfmRegister.bbRegisterClick(Sender: TObject);
+begin
+  if edVerify.Text = dbedPassword.Text then
+  begin
+    ModalResult := mrYes;
+  end
+  else
+  begin
+    ModalResult := mrNo;
+  end;
+end;
 
 end.

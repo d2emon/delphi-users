@@ -41,16 +41,17 @@ object fmRegister: TfmRegister
     Top = 176
     Width = 75
     Height = 25
-    TabOrder = 0
+    TabOrder = 3
+    OnClick = bbRegisterClick
     Kind = bkOK
   end
-  object edConfirm: TEdit
+  object edVerify: TEdit
     Left = 8
     Top = 144
     Width = 121
     Height = 21
     PasswordChar = '*'
-    TabOrder = 1
+    TabOrder = 2
   end
   object dbedUsername: TDBEdit
     Left = 8
@@ -59,7 +60,7 @@ object fmRegister: TfmRegister
     Height = 21
     DataField = 'Name'
     DataSource = dmUser.dsUsers
-    TabOrder = 2
+    TabOrder = 0
   end
   object dbedPassword: TDBEdit
     Left = 8
@@ -69,6 +70,6 @@ object fmRegister: TfmRegister
     DataField = 'Pass'
     DataSource = dmUser.dsUsers
     PasswordChar = '*'
-    TabOrder = 3
+    TabOrder = 1
   end
 end

@@ -14,103 +14,76 @@ object fmMain: TfmMain
   OldCreateOrder = False
   PixelsPerInch = 96
   TextHeight = 13
-  object BitBtn1: TBitBtn
-    Left = 160
-    Top = 144
-    Width = 75
-    Height = 25
-    Action = aLogin
-    Caption = '&Login'
-    TabOrder = 0
-    Glyph.Data = {
-      42020000424D4202000000000000420000002800000010000000100000000100
-      1000030000000002000000000000000000000000000000000000007C0000E003
-      00001F0000001F7C1F7C1F7C1F7C1F7C1F7C1F7C1F7C1F7C1F7C1F7C1F7C1F7C
-      0000000000001F7C1F7C1F7C1F7C1F7C1F7C1F7C1F7C1F7C1F7C1F7C1F7C1F7C
-      0000E07F00001F7C1F7C1F7C1F7C1F7C1F7C1F7C1F7C1F7C1F7C1F7C00000000
-      0000E07F00001F7C1F7C1F7C1F7C1F7C1F7C1F7C1F7C1F7C1F7C1F7C0000E07F
-      0042E07F00001F7C1F7C1F7C1F7C1F7C1F7C1F7C1F7C1F7C0000000000000042
-      E07F00001F7C1F7C1F7C1F7C1F7C1F7C1F7C1F7C1F7C00000000E07F0042E07F
-      00001F7C1F7C1F7C1F7C1F7C1F7C1F7C1F7C1F7C1F7C0000E07F0042E07F0000
-      1F7C1F7C1F7C1F7CEF3D0000000000001F7C0000000000000042E07F00001F7C
-      1F7C1F7C1F7CEF3D0000E07FE07FE07F00000000E07F0042E07F00001F7C1F7C
-      1F7C1F7C1F7C0000E07FE07FE07FE07FE07FE07F0042E07F00001F7C1F7C1F7C
-      1F7C1F7C1F7C0000E07FE07FE07FE07FE07FE07FE07F00001F7C1F7C1F7C1F7C
-      1F7C1F7C1F7C0000E07FE07F000000000042E07FE07F0000EF3D1F7C1F7C1F7C
-      1F7C1F7C1F7CEF3DEF3DE07F000000000042E07FE07FE07F00001F7C1F7C1F7C
-      1F7C1F7C1F7C1F7C0000E07FE07F00420042E07FE07FE07F00001F7C1F7C1F7C
-      1F7C1F7C1F7C1F7C1F7C0000EF3DE07FE07FE07FE07F0000EF3D1F7C1F7C1F7C
-      1F7C1F7C1F7C1F7C1F7C1F7CEF3D0000000000000000EF3D1F7C1F7C1F7C1F7C
-      1F7C1F7C1F7C}
-  end
-  object Button1: TButton
-    Left = 160
-    Top = 176
-    Width = 75
-    Height = 25
-    Action = aCustom
-    TabOrder = 1
-  end
   object cbMenu: TControlBar
     Left = 0
     Top = 0
-    Width = 688
-    Height = 33
+    Width = 680
+    Height = 60
     Align = alTop
-    TabOrder = 2
+    AutoSize = True
+    TabOrder = 0
     object ambMenu: TActionMainMenuBar
       Left = 11
       Top = 2
-      Width = 547
-      Height = 22
+      Width = 262
+      Height = 27
       ActionManager = amActions
       Caption = 'Menu'
-      ColorMap.HighlightColor = 15660791
+      ColorMap.HighlightColor = clWhite
       ColorMap.BtnSelectedColor = clBtnFace
-      ColorMap.UnusedColor = 15660791
+      ColorMap.UnusedColor = clWhite
       Font.Charset = DEFAULT_CHARSET
       Font.Color = clMenuText
-      Font.Height = -11
-      Font.Name = 'Tahoma'
+      Font.Height = -12
+      Font.Name = 'Segoe UI'
       Font.Style = []
       Spacing = 0
     end
+    object atbTools: TActionToolBar
+      Left = 11
+      Top = 28
+      Width = 225
+      Height = 26
+      ActionManager = amActions
+      Caption = 'ToolBar'
+      ColorMap.HighlightColor = clWhite
+      ColorMap.BtnSelectedColor = clBtnFace
+      ColorMap.UnusedColor = clWhite
+      Spacing = 0
+    end
   end
-  object atbTools: TActionToolBar
+  object pnLeft: TPanel
     Left = 0
-    Top = 33
-    Width = 688
-    Height = 48
-    ActionManager = amActions
-    Caption = 'ToolBar'
-    ColorMap.HighlightColor = 15660791
-    ColorMap.BtnSelectedColor = clBtnFace
-    ColorMap.UnusedColor = 15660791
-    Spacing = 0
-  end
-  object DBGrid1: TDBGrid
-    Left = 64
-    Top = 240
-    Width = 320
-    Height = 120
-    DataSource = dmUser.dsLogin
-    TabOrder = 4
-    TitleFont.Charset = DEFAULT_CHARSET
-    TitleFont.Color = clWindowText
-    TitleFont.Height = -11
-    TitleFont.Name = 'MS Sans Serif'
-    TitleFont.Style = []
+    Top = 60
+    Width = 680
+    Height = 100
+    Align = alTop
+    TabOrder = 1
+    object DBGrid1: TDBGrid
+      Left = 1
+      Top = 1
+      Width = 678
+      Height = 98
+      Align = alClient
+      DataSource = dmUser.dsLogin
+      TabOrder = 0
+      TitleFont.Charset = DEFAULT_CHARSET
+      TitleFont.Color = clWindowText
+      TitleFont.Height = -11
+      TitleFont.Name = 'MS Sans Serif'
+      TitleFont.Style = []
+    end
   end
   object cdCustom: TCustomizeDlg
     ActionManager = amActions
     StayOnTop = False
-    Left = 448
-    Top = 128
+    Left = 72
+    Top = 64
   end
   object alActions: TActionList
     Images = ilImages
-    Left = 296
-    Top = 184
+    Left = 8
+    Top = 64
     object aRegister: TAction
       Category = 'User'
       Caption = '&Register'
@@ -172,6 +145,10 @@ object fmMain: TfmMain
           item
             Action = aCustom
             ImageIndex = 2
+          end
+          item
+            Action = aLogin
+            ImageIndex = 0
           end>
         ActionBar = atbTools
       end>
@@ -182,18 +159,15 @@ object fmMain: TfmMain
       end>
     Images = ilImages
     State = asSuspended
-    Left = 336
-    Top = 88
+    Left = 40
+    Top = 64
     StyleName = 'XP Style'
-    object Action1: TAction
-      Caption = 'Action1'
-    end
   end
   object ilImages: TImageList
-    Left = 352
-    Top = 240
+    Left = 104
+    Top = 64
     Bitmap = {
-      494C010108000900040010001000FFFFFFFFFF00FFFFFFFFFFFFFFFF424D3600
+      494C010108000900040010001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000400000003000000001002000000000000030
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000
@@ -593,6 +567,7 @@ object fmMain: TfmMain
       FFE0FFE207E033E8FFE0FFC603E0C5F3FF81FF8D03F08BE2FF03FF3B23C097C4
       FF07C2373FC031C0840F846FE3C0A181001F39DF22304050003F3FBF00208830
       007F333F00203028003F235F00622206003F479F001E480E803FAF9F001F848F
-      C03FD03F001F111FE07FE07F007F637F}
+      C03FD03F001F111FE07FE07F007F637F00000000000000000000000000000000
+      000000000000}
   end
 end

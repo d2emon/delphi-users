@@ -129,4 +129,19 @@ object dmUser: TdmUser
     Left = 128
     Top = 8
   end
+  object quExists: TQuery
+    DatabaseName = 'users'
+    SQL.Strings = (
+      'SELECT Id'
+      'FROM "users.db" Users'
+      'WHERE  Name = :Username')
+    Left = 8
+    Top = 56
+    ParamData = <
+      item
+        DataType = ftString
+        Name = 'Username'
+        ParamType = ptUnknown
+      end>
+  end
 end
