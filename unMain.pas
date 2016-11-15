@@ -24,9 +24,11 @@ type
     ambMenu: TActionMainMenuBar;
     atbTools: TActionToolBar;
     DBGrid1: TDBGrid;
+    aSelectGame: TAction;
     procedure aCustomExecute(Sender: TObject);
     procedure aLoginExecute(Sender: TObject);
     procedure aRegisterExecute(Sender: TObject);
+    procedure aSelectGameExecute(Sender: TObject);
   private
     { Private declarations }
   public
@@ -42,7 +44,7 @@ var
 
 implementation
 
-uses unLogin, unRegister, unDBUser;
+uses unLogin, unRegister, unDBUser, unSelect;
 
 {$R *.dfm}
 
@@ -59,6 +61,11 @@ end;
 procedure TfmMain.aRegisterExecute(Sender: TObject);
 begin
   User.ShowRegisterForm;
+end;
+
+procedure TfmMain.aSelectGameExecute(Sender: TObject);
+begin
+  fmSelect.ShowModal;
 end;
 
 end.
