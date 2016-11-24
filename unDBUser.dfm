@@ -3,7 +3,7 @@ object dmUser: TdmUser
   OnCreate = DataModuleCreate
   Left = 192
   Top = 114
-  Height = 150
+  Height = 226
   Width = 215
   object quLogin: TQuery
     DatabaseName = 'users'
@@ -91,10 +91,12 @@ object dmUser: TdmUser
     end
     object tbUsersName: TStringField
       FieldName = 'Name'
+      Required = True
       Size = 55
     end
     object tbUsersPass: TStringField
       FieldName = 'Pass'
+      Required = True
       Size = 55
     end
     object tbUsersRights: TStringField
@@ -103,6 +105,7 @@ object dmUser: TdmUser
     end
     object tbUsersEmail: TStringField
       FieldName = 'Email'
+      Required = True
       Size = 55
     end
     object tbUsersRank: TStringField
@@ -129,7 +132,7 @@ object dmUser: TdmUser
     Left = 128
     Top = 8
   end
-  object quExists: TQuery
+  object quUserExists: TQuery
     DatabaseName = 'users'
     SQL.Strings = (
       'SELECT Id'
@@ -141,6 +144,21 @@ object dmUser: TdmUser
       item
         DataType = ftString
         Name = 'Username'
+        ParamType = ptUnknown
+      end>
+  end
+  object quEmailExists: TQuery
+    DatabaseName = 'users'
+    SQL.Strings = (
+      'SELECT Id'
+      'FROM "users.db" Users'
+      'WHERE  Email = :Email')
+    Left = 8
+    Top = 104
+    ParamData = <
+      item
+        DataType = ftString
+        Name = 'Email'
         ParamType = ptUnknown
       end>
   end

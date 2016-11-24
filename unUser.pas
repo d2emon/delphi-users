@@ -3,43 +3,61 @@ unit unUser;
 interface
 
 uses
-  DB, DBTables, SysUtils, unDBUser, Controls, Dialogs;
+  DB, DBTables, Forms, SysUtils, unDBUser, Controls, Dialogs;
 
 type
   EUserException = class(Exception)
   end;
 
   TUser = class
-  private
+  protected
+    AutoRegister: Boolean;
+    CanGuest: Boolean;
+
     FLoginQuery: TQuery;
     FUsernameParam: TParam;
     FPasswordParam: TParam;
     FDataModule: TdmUser;
-    function GetId: integer;
+
+    LifeTime: Integer;
+    // Max allowed idle time before
+    // reauthentication is necessary.
+    // If set to 0, auth never expires.
+
+    RefreshTime: Integer;
+    // Refresh interval in minutes.
+    // When expires auth data is refreshed
+    // from db using auth_refreshlogin()
+    // method. Set to 0 to disable refresh
+    procedure UpdateUser;
+  private
+    Expired: TTime;
+    Refresh: TTime;
+    function GetAuthenticated: Boolean;
+    function GetGuest: Boolean;
+    function GetId: Integer;
   public
-    property Id: integer read GetId;
-    function Login(Username, Password: String): Boolean;
-    constructor Create;
+    LoginForm: TForm;
+    RegisterForm: TForm;
+
+    property Authenticated: Boolean read GetAuthenticated;
     property DataModule: TdmUser read FDataModule;
-    function ShowLoginForm: Boolean;
-    function ShowRegisterForm: Boolean;
+    property Id: integer read GetId;
+    property IsGuest: Boolean read GetGuest;
+    constructor Create;
+    function Login(Username, Password: String): Boolean;
     function NewUser(Username, Password: String): Boolean;
+    function ShowLoginForm: Boolean;
+    function ShowRefreshForm: Boolean;
+    function ShowRegisterForm: Boolean;
+    procedure Start;
   end;
 
 resourcestring
   ErrorBanned = 'You are banned!';
   ErrorLogin  = 'Invalid Username or Password';
-  ErrorExists = 'This user allready exists!';
-
-  AccessEnabled = 'Access Enabled';
-  AccessDenied  = 'Access Denied';
-
-var
-  User: TUser;
 
 implementation
-
-uses unLogin, unRegister;
 
 constructor TUser.Create;
 begin
@@ -48,6 +66,28 @@ begin
   FLoginQuery    := FDataModule.quLogin;
   FUsernameParam := FDataModule.quLogin.ParamByName('Username');
   FPasswordParam := FDataModule.quLogin.ParamByName('Password');
+
+  CanGuest     := True;
+  AutoRegister := True;
+  Lifetime     := 15;
+  RefreshTime  := 0;
+end;
+
+function TUser.GetAuthenticated: Boolean;
+begin
+  Result := False;
+  if ((not IsGuest) and ((self.Lifetime <= 0) or (Now() < self.Expired))) then
+  begin
+    if (self.RefreshTime > 0) and (self.Refresh > 0) and (self.Refresh < Now()) then
+    begin
+      Result := self.ShowRefreshForm;
+    end;
+  end;
+end;
+
+function TUser.GetGuest: Boolean;
+begin
+  Result := (self.Id <= 0);
 end;
 
 function TUser.GetId: integer;
@@ -57,14 +97,13 @@ end;
 
 function TUser.Login(Username, Password: String): Boolean;
 begin
-  FUsernameParam.AsString := Username;
-  FPasswordParam.AsString := Password;
+  FUsernameParam.Value := Username;
+  FPasswordParam.Value := Password;
 
   FLoginQuery.Close;
-  // FLoginQuery.ExecSQL;
   FLoginQuery.Open;
 
-  if(Id>0)then
+  if(not self.IsGuest)then
   begin
     if(DataModule.quLoginBanned.Value)then
     begin
@@ -85,61 +124,44 @@ end;
 
 function TUser.NewUser(Username, Password: String): Boolean;
 begin
-  DataModule.quExists.ParamByName('Username').AsString := Username;
-
-  DataModule.quExists.Close;
-  // DataModule.quExists.ExecSQL;
-  DataModule.quExists.Open;
-
-  if DataModule.quExists.RecordCount = 0 then
-  begin
-    DataModule.tbUsers.Post;
-    result := true;
-  end
-  else
-  begin
-    raise EUserException.Create(ErrorExists);
-    result := false;
-  end;
+  if (DataModule.ValidateUsername(Username))
+    then Result := DataModule.InsertUser([Username, Password])
+    else Result := False;
 end;
 
 function TUser.ShowLoginForm: Boolean;
-var
-  LoginForm: TfmLogin;
 begin
-  LoginForm := TfmLogin.Create(nil);
-  LoginForm.User := self;
+  result := (self.LoginForm.ShowModal = mrYes);
+end;
 
-  if LoginForm.ShowModal = mrYes then
-  begin
-    result := Login(LoginForm.leUsername.Text, LoginForm.lePassword.Text);
-  end
-  else
-  begin
-    result := false;
-  end;
-
-  if result then
-    MessageDlg(AccessEnabled, mtInformation, [mbOk], 0)
-  else
-    MessageDlg(AccessDenied, mtError, [mbOk], 0);
+function TUser.ShowRefreshForm: Boolean;
+begin
+  Result := self.ShowLoginForm;
 end;
 
 function TUser.ShowRegisterForm: Boolean;
-var
-  RegisterForm: TfmRegister;
 begin
-  RegisterForm := TfmRegister.Create(nil);
+  result := (self.RegisterForm.ShowModal = mrYes);
+end;
 
-  DataModule.tbUsers.Insert;
-
-  if RegisterForm.ShowModal = mrYes then
-  begin
-    result := NewUser(RegisterForm.dbedUsername.Text, RegisterForm.dbedPassword.Text);
-  end
+procedure TUser.Start;
+begin
+  if self.Authenticated then
+    self.UpdateUser
   else
+    if AutoRegister then
+      self.ShowRegisterForm
+    else
+      if not CanGuest then
+        self.ShowLoginForm;
+end;
+
+procedure TUser.UpdateUser;
+begin
+  if not self.IsGuest then
   begin
-    result := false;
+    self.Expired := Now() + (60 * LifeTime);
+    self.Refresh := Now() + (60 * RefreshTime);
   end;
 end;
 
